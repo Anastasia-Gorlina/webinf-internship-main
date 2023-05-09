@@ -3,8 +3,8 @@ const path = require('path');
 const { execSync } = require('child_process');
 
 const IGNORE_FILE_PATH = '.stylelintignore';
-
-function isIgnoredFile(filePath) {
+//проверяю, является ли данный файл игнорируемым согласно .stylelintignore
+function isIgnoredFile(filePath) { 
   const ignorePatterns = fs.readFileSync(IGNORE_FILE_PATH, 'utf-8').split('\n');
   for (const pattern of ignorePatterns) {
     if (!pattern || pattern.startsWith('#')) {
@@ -19,6 +19,7 @@ function isIgnoredFile(filePath) {
   return false;
 }
 
+//проверяю, есть ли в файле ошибки Stylelint.
 function hasErrors(filePath) {
   try {
     execSync(`npx stylelint ${filePath}`, { stdio: 'ignore' });
@@ -27,7 +28,7 @@ function hasErrors(filePath) {
     return true;
   }
 }
-
+//оптимизирую файл .stylelintignore
 function optimizeIgnoreFile() {
   const ignorePatterns = fs.readFileSync(IGNORE_FILE_PATH, 'utf-8').split('\n');
   const optimizedPatterns = [];
